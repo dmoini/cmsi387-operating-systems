@@ -10,18 +10,18 @@ int main() {
     int heightInInches;
     char eyeColor[20];
     printf("Enter your name: ");
-    fgets(name, 20, stdin);
+    scanf("%s", name);
     printf("Enter your age: ");
     scanf("%d", &age);
     printf("Enter your class year: ");
     scanf("%d", &classYear);
     printf("Enter your hair color: ");
-    fgets(hairColor, 20, stdin);
+    scanf("%s", hairColor);
     printf("Enter your height in inches: ");
     scanf("%d", &heightInInches);
     printf("Enter your eye color: ");
-    fgets(eyeColor, 20, stdin);
-    printf("\nName: %sAge: %d \nClass year: %d \nHair color: %s \nHeight in inches: %d \nEye color: %s \n", 
+    scanf("%s", eyeColor);
+    printf("\nName: %s \nAge: %d \nClass year: %d \nHair color: %s \nHeight in inches: %d \nEye color: %s \n", 
             name, age, classYear, hairColor, heightInInches, eyeColor);
     return 0;
 }
