@@ -30,8 +30,6 @@ int main( int argc, char *argv[] ) {
     for (int i = 0; i < index; i++)
         str_index += sprintf(&str[str_index], "%d", elements[i]);
     printf("String: %s\n", str);
-    
-    
 
     int seven_count = 0;
     for (int i = 0; i < index; i++) {
