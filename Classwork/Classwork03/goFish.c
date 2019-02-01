@@ -25,13 +25,13 @@ int main( int argc, char *argv[] ) {
     float average = (float) sum / index;
     printf("Average: %f \n", average);
     
-    // char* num_string;
-    // for(int i = 0; i < index; i++) {
-    //     num_string = *strcat(num_string, (char*) elements[i]);
-    // }
-    // // printf("sum: %d", sum);
-    // int n;
-    // n = sprintf();
+    char str[128];
+    int str_index = 0;
+    for (int i = 0; i < index; i++)
+        str_index += sprintf(&str[str_index], "%d", elements[i]);
+    printf("String: %s\n", str);
+    
+    
 
     int seven_count = 0;
     for (int i = 0; i < index; i++) {
