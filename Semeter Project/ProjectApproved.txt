@@ -1,0 +1,20 @@
+Lizarda/Moini/Zafiris
+
+CMSI 387 Operating Systems
+	Semester Project
+===================================
+
+This is a great idea!  I like the name and the fact that it
+reflects what is happening in the system.  Don't forget that
+you can write command line "switches" like "-t" or "-k 10" to
+do things like sort the output or provide a smaller listing.
+You might consider a switch that allows the user to input a
+max percentage level so that the output shows only processes
+that are above that level.
+
+There are already operating system tools in place that do this
+ABOVE the kernel level, as you said with the "ps" command, but 
+encapsulating the operations into the kernel is a worthy project!
+
+Project approved.  Good work and good luck!
+
