@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <posix.h>
+#include <unistd.h>
+#include <pthread.h>
+// #include <posix.h>
 
 #define FRAME_ARRAY_SIZE 4096
 #define NUMBER_OF_PAGES     4
@@ -11,19 +13,19 @@ int *frameStart;     // used to keep a permanent reference to the start of pageF
 int *pageTable;      // used for an array of page REFERENCES to find the page table
 int *tableStart;     // used to keep a permanent referrece to the start of pageTable
 
-DWORD WINAPI myThread( LPVOID );
+// DWORD WINAPI myThread( LPVOID );
 
-DWORD WINAPI myThread( void *ignored ) {
+void *myThread( void *ignored ) {
    int threadID = (int)ignored;
    printf( "      thread number: %d\n", threadID );
-   Sleep( 1234 * threadID );
+   sleep( 1234 * threadID );
    return 0;
 }
 
 int main( int argc, char * argv[] ) {
 
-   HANDLE hThreads[NUMBER_OF_PAGES];
-   DWORD  threadIDs[NUMBER_OF_PAGES];
+   pthread_t hThreads[NUMBER_OF_PAGES];
+   pthread_t threadIDs[NUMBER_OF_PAGES];
 
    printf( "\n\n   Welcome to the Virtual Memory Base Table Simulator......\n" );
    
@@ -68,7 +70,8 @@ int main( int argc, char * argv[] ) {
   //  the thread will read and display a certain number of "pseudo-instructions" for each time
   //    it is accessed
    for( int i = 0; i < NUMBER_OF_PAGES; i++ ) {
-      hThreads[i] = CreateThread( NULL, 0, myThread, (LPVOID)i, 0, &threadIDs[i] );
+    //   hThreads[i] = CreateThread( NULL, 0, myThread, (LPVOID)i, 0, &threadIDs[i] );
+    hThreads[i] = pthread_create(&threadIDs, NULL, myThread, NULL);
       if( hThreads[i] ) {
          printf( "      myThread %d created successfully and launched...\n", i );
       } else {
