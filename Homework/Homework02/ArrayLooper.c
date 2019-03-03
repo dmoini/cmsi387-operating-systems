@@ -3,6 +3,7 @@
 #include<time.h>
 
 int main(int argc, char* argv[]) {
+    clock_t begin = clock();
     if (1 == argc) {
         printf("Please enter one argument, the array size.\n");
         exit(0);
@@ -22,5 +23,8 @@ int main(int argc, char* argv[]) {
         }
     }
     free(vmArray);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Execution time: %fs\n", time_spent);
     return 0;
 }
