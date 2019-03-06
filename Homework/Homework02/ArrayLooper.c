@@ -24,6 +24,7 @@ int main(int argc, char* argv[]) {
 
     for (int i = 0; i < length; i += 4096) {
         clock_t begin = clock();
+        vmArray[i];
         // printf("Array element %d is %d\n", i, vmArray[i]);
         clock_t end = clock();
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
