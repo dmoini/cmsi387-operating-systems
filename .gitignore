@@ -1,12 +1,6 @@
-.vscode
-*.class
 CallAndResponse
 PthreadCancel
 evenOddTable
 goFish
 schedPractice
 bounded
-vmArrayTimer
-VMSimulator
-multiforker
-ArrayLooper
