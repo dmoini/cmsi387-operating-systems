@@ -1,4 +1,0 @@
-- How many times did the buffer fill up so the producer had to wait?
-  - The buffer never filled because it kept alternating between being filled by 1 and them consumed by 1.
-- How many times was the buffer empty so the consumer had to wait?
-  - The buffer was never empty because it kept alternating between being filled by 1 and them consumed by 1.
