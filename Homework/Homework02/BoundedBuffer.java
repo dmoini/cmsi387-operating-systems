@@ -10,75 +10,87 @@ public class BoundedBuffer {
 
     public class Producer extends Thread {
         public synchronized void insert(Object o) throws InterruptedException {
-            while (numOccupied == buffer.length) {
-                // wait for space
-                System.out.println("Producer about to begin waiting");
-                wait();
-                System.out.println("Producer waiting");
+            while (true) {
+                while (numOccupied == buffer.length)
+                    wait();
+                buffer[(firstOccupied + numOccupied) % buffer.length] = o;
+                numOccupied++;
+                System.out.println("Producer produced: " + numOccupied);
+
+                // in case any retrieves are waiting for data, wake them
+                if (numOccupied == 1) {
+                    System.out.println("\nnotifyAll called for Producer\n");
+                    notifyAll();
+                }
+                Thread.sleep(500);
+
             }
-            buffer[(firstOccupied + numOccupied) % buffer.length] = o;
-            numOccupied++;
-            // in case any retrieves are waiting for data, wake them
-            // if (numOccupied == 1) {
-            notifyAll();
-            // }
         }
 
         public void run() {
-            System.out.println("Running producer thread.");
-            System.out.println("Producer numOccupied START: " + numOccupied);
+            System.out.println("\nRunning producer thread.\n");
             int n = 5;
-            while (numOccupied < buffer.length) {
-                System.out.println("Producer numOccupied: " + numOccupied);
-                try {
-                    insert(n);
-                } catch (InterruptedException ie) {
-                    System.out.println("Producer thread has been interrupted.");
-                }
+            // while (numOccupied <= buffer.length) {
+            // System.out.println("Producer numOccupied: " + numOccupied);
+            try {
+                insert(n);
+            } catch (InterruptedException ie) {
+                System.out.println("Producer thread has been interrupted.");
             }
+            // }
         }
     }
 
     public class Consumer extends Thread {
         public synchronized Object retrieve() throws InterruptedException {
-            while (numOccupied == 0) {
+            while (numOccupied == 0)
                 // wait for data
-                System.out.println("Consumer about to begin waiting");
                 wait();
-                System.out.println("Consumer waiting");
-            }
             Object retrieved = buffer[firstOccupied];
             buffer[firstOccupied] = null; // may help garbage collector
             firstOccupied = (firstOccupied + 1) % buffer.length;
             numOccupied--;
             // in case any inserts are waiting for space, wake them
-            // if (numOccupied == 19) {
-            notifyAll();
-            // }
+            // notifyAll();
+            if (numOccupied == 19) {
+
+                notifyAll();
+                System.out.println("\nnotifyAll called for Consumer\n");
+            }
+            Thread.sleep(700);
+
             return retrieved;
+
         }
 
         public void run() {
-            System.out.println("Running consumer thread.");
-            // System.out.println("Consumer numOccupied START: " + numOccupied);
-            while (numOccupied != 0) {
-                System.out.println("Consumer numOccupied: " + numOccupied);
+            System.out.println("\nRunning consumer thread.\n");
+
+            // System.out.println("Consumer start: " + numOccupied);
+
+            while (numOccupied >= 0) {
+                System.out.println("Consumer consumed: " + numOccupied);
+
                 try {
-                    Object r = retrieve();
-                    // System.out.println("Retrieved: " + r);
+                    retrieve();
                 } catch (InterruptedException ie) {
                     System.out.println("Comsumer thread has been interrupted.");
                 }
+
             }
+            System.out.println("End of consumer thread");
+
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        // Test
         Producer p = new BoundedBuffer().new Producer();
-        Producer p2 = new BoundedBuffer().new Producer();
         Consumer c = new BoundedBuffer().new Consumer();
-        p.run();
-        p2.run();
-        c.run();
+        p.start();
+        c.start();
+        c.join();
+        p.join();
+
     }
 }
