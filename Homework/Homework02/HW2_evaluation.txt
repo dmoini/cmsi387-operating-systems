@@ -1,0 +1,32 @@
+
+
+CMSI 387 Operating Systems
+Results for Homework #2 Evaluation
+==================================
+
+Question 1 mutex reversing:          5/ 5 points
+Question 2 auditing code change:     5/ 5 points
+Question 3 test program:            20/20 points
+Question 4 notifyall() addition:    10/10 points
+Question 5a 2-phase locking:         5/ 5 points
+Question 5b short read locks:        5/ 5 points
+Question 5c snapshot isolation:      5/ 5 points
+Question 6 virtual address xlate:    5/ 5 points
+Question 7 calc. explanation:        5/ 5 points
+Question 8 loop 4096 analysis:      20/20 points
+Question 9 fork() tree:             15/15 points
+
+Total 100 out of 100 = 100.00% which is an A-plus
+
+Comments:
+---------
+Question 8, excellent report!  It's curious that it takes the
+same amount of time no matter what, and that the windows computer
+couldn't allocate a 1 billion element array...
+
+Question 9, the tree is actually incorrect.  However, because
+we talked about it ahead of time and I told you your tree was
+right, I'll have to give you the points.  Let's meet and talk
+about what it should look like.
+
+Nice work!
