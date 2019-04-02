@@ -9,18 +9,18 @@
 void printElapsedTime(clock_t begin) {
     clock_t end = clock();
     double elapsed_time = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("\nTime taken to read file: %f\ns", elapsed_time);
+    printf("\nTime taken to read file: %fs\n", elapsed_time);
 }
 
 // Thank you to https://www.youtube.com/watch?v=m7E9piHcfr4
-int main(int argc, char* argv[]) {
-    int file = open("text.txt", O_RDONLY, S_IRUSR | S_IWUSR);
+int main(int argc, char** argv) {
+    int file = open(argv[1], O_RDONLY, S_IRUSR | S_IWUSR);
     struct stat sb;
 
     if (fstat(file, &sb) == -1) {
         perror("Could not get file size.\n");
     }
-    printf("File size is %lld\n", sb.st_size);
+    printf("File size is %lld\n\n", sb.st_size);
     char* memoryFile = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, file, 0);
 
     clock_t begin = clock();
