@@ -11,3 +11,4 @@ VMSimulator
 multiforker
 ArrayLooper
 file-processes
+mmap
