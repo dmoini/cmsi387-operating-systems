@@ -11,10 +11,10 @@ int main(int argc, char** argv) {
     switch (argv[1][1]) {   // checks option argv[1][1] is either 't' or 'd'
     case 't':   // if option entered is 't'
        // argv[1] has option (-t)
-    // argv[2] has from_characters
-    // argv[3] has to characters
-    // argv[4] is <
-    // argv[5] is filename
+        // argv[2] has from_characters
+        // argv[3] has to characters
+        // argv[4] is <
+        // argv[5] is filename
         printf("file - %s\n", argv[5]);   // print filename
         fp = fopen(argv[5], "r");   // open file to read
         if (fp != NULL) {   // if file was successfully opened to read
