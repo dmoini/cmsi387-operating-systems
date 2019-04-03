@@ -1,20 +1,30 @@
+#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
-int main(int argc, char const *argv[]) {
-    FILE *fptr = fopen(argv[3], "r");
-    if (fptr == NULL) {
-        printf("Cannot open file.\n");
-        exit(0);
+int main(){
+    pid_t returnedValue = fork();
+    if(returnedValue < 0){
+        perror("error forking");
+        return -1;
+    } else if (returnedValue == 0){
+        if(close(STDOUT_FILENO) < 0){
+            perror("error closing standard output");
+            return -1;
     }
-    char c = fgetc(fptr);
-    while (c != EOF) {
-        if (c >= 97 && c <= 122) {
-            c -= 32;
+        if(open("my-processes", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR) < 0){
+            perror("error opening my-processes");
+            return -1;
         }
-        printf("%c", c);
-        c = fgetc(fptr);
+        execlp("tr", "tr", "l", NULL);
+        perror("error executing tr");
+        return -1;
+} else {
+        if(waitpid(returnedValue, 0, 0) < 0){
+            perror("error waiting for child");
+            return -1;
+        }
+        printf( "Note the parent still has the old standard output." );
     }
-    fclose(fptr);
-    return 0;
 }
