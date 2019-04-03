@@ -12,5 +12,4 @@ multiforker
 ArrayLooper
 file-processes
 mmap
-my-tr
-test.txt
+tr
