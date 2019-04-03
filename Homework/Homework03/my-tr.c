@@ -17,7 +17,7 @@ int main(){
             perror("error opening my-processes");
             return -1;
         }
-        execlp("tr", "tr", "l", NULL);
+        execlp("tr", "tr", NULL, NULL);
         perror("error executing tr");
         return -1;
 } else {
