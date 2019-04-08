@@ -15,7 +15,7 @@ class Philosopher(threading.Thread):
     def run(self):
         while(self.running):
             time.sleep(random.uniform(1, 10))
-            print(f'{self.name} is hungry')
+            print({self.name} is hungry)
             self.dine()
 
     def dine(self):
@@ -26,7 +26,7 @@ class Philosopher(threading.Thread):
             if locked: 
                 break
             fork1.release()
-            print(f'{self.name} swapped forks')
+            print({self.name} swapped forks)
             fork1, fork2 = fork2, fork1
         else:
             return
