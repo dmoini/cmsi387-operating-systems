@@ -1,0 +1,36 @@
+
+Evaluation for Homework 3
+CMSI 387 - Operating Systems
+============================
+
+Question 1: dining philosophers program:   20.00 points out of 20 possible
+Question 2: why immune explanation     :   10.00 points out of 10 possible
+Question 3: file processing "C" program:   20.00 points out of 20 possible
+Question 4: mmap program "C" program   :   20.00 points out of 20 possible
+Question 5: appropriate class explained:   10.00 points out of 10 possible
+
+Total possible points:     80.00 points
+           your score:     80.00 points
+       homework total:     80.00/80.00 = 100.00% which is an A-plus
+
+Comments:
+---------
+Good explanation for #2 and it will prevent deadlock.  However, this might
+lead to "starvation" if one thread can't EVER get the resources it needs.
+
+Which version of python did you use for your program?  I initially got a
+syntax error on the print statements, running either the default mac version
+of 2.7.10 or using my installed Idle at version 3.5.4.  I corrected it and
+the simulation ran great!!
+
+Nice work!
+
+Semester so far:
+
+   homework01 @ 10%:  100.00% = 10.00 points
+   homework02 @ 10%:  100.00% = 10.00 points
+   homework03 @ 10%:  100.00% = 10.00 points
+   particip.  @ 10%:  100.00% = 10.00 points
+   proj pt. 1 @ 20%:  100.00% = 20.00 points
+
+       total points:  60.00 out of 60.00 = 100.00% which is an A-plus
