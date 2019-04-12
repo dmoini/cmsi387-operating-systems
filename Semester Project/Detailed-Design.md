@@ -13,6 +13,6 @@ While no new modules will be created, we will be adding a utility layer to `p​
 
 ## Command Line Options
 `hog​ [-p] n`
-- **p** = argument that asks for a minimum usage requirement to show up in the list
+- **p** = optional argument that asks for a minimum usage requirement to show up in the list
   - `hog -p 25​` would return programs that use at least 25% of the CPU
 - **n** = argument to restrict the list itself. If preceded by ​`-p`,​ ​*n​* refers to the programs using up *n*​ ​percentage or more of the CPU. If *n​* is the sole argument, *n​* ​refers to the top ​*n​* programs using up the CPU.
