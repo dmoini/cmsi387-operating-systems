@@ -3,10 +3,6 @@
 #include <string.h>
 #include <math.h>
 
-#define NEWLINE() printf("\n");
-#define DIVIDER() printf("============================================================================\n");
-#define PL(l) printf("LINE: %s\n", l);
-
 enum { MAX_PROCESSES = 20 };
 enum { BUFFER_SIZE = 1024 };
 
@@ -62,8 +58,6 @@ void printHogUsageInstructions() {
     printf("   NOTE: if no -p, n will be floored\n\n");
 }
 
-// -1 = error
-// 0 = valid arguments
 int validateArgs(int len, char const* argv[]) {
     if (len == 2) {  // validating for hogN
         int n = atoi(argv[1]);
