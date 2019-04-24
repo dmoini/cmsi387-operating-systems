@@ -10,19 +10,19 @@
 enum { MAX_PROCESSES = 20 };
 enum { BUFFER_SIZE = 1024 };
 
-struct Hog {
+typedef struct {
     int PID;
     double CPU;
     double MEM;
     // char COMMAND[1021];  // may delete, idk
-};
+} Hog;  // negativeOneHog = {-1, -1, -1};
 
 // TODO: update printing format to match columns
-void printHog(struct Hog h) {
+void printHog(Hog h) {
     printf("PID: %d  \t\t%%CPU: %.1f  \t\t%%MEM: %.1f\n", h.PID, h.CPU, h.MEM);
 }
 
-struct Hog createHogFromLine(char* line) {
+Hog createHogFromLine(char* line) {
     char* currCol;
     char* pid;
     char* cpu;
@@ -45,7 +45,7 @@ struct Hog createHogFromLine(char* line) {
     currCol = strtok(NULL, " ");
     mem = currCol;
 
-    struct Hog h = {atoi(pid), atof(cpu), atof(mem)};
+    Hog h = {atoi(pid), atof(cpu), atof(mem)};
     return h;
 }
 
@@ -84,8 +84,72 @@ int validateArgs(int len, char const* argv[]) {
     }
 }
 
+void prefillTop(Hog top[], int n) {
+    for (int i = 0; i  < n; i++) {
+        Hog h = {-1, -1, -1};
+        top[i] = h;
+        // TODO: ask why this causes error?
+        // top[i] = negativeOneHog;
+    }
+}
+
+void printTop(Hog top[], int n) {
+    for (int i = 0; i < n; i++) {
+        printHog(top[i]);
+    }
+}
+
+// int compareHog(struct Hog** h1, struct Hog** h2) {
+//     return (*h1)->CPU - (*h2)->CPU;
+// }
+
+int compareCPU(const void *h1, const void *h2) {
+    const Hog *hogA = h1;
+    const Hog *hogB = h2;
+    return (hogA->CPU > hogB->CPU) - (hogA->CPU < hogB->CPU);
+}
+
+// TODO
 void hogN(int n) {
-    // TODO
+    Hog top[n];
+    prefillTop(top, n);
+    printTop(top, n);
+    NEWLINE();
+    
+    Hog h = {2, 2, 2};
+    top[2] = h;
+    printTop(top, n);
+    NEWLINE();
+    
+    qsort(top, n, sizeof(Hog), compareCPU);
+    printTop(top, n);
+    
+    
+    NEWLINE();
+    FILE* fp = popen("ps -ev", "r");
+    char buf[BUFFER_SIZE];
+    // char* line = (char*)1;
+    char* line = fgets(buf, BUFFER_SIZE, fp); // <-- uncomment to read and skip first line with labels
+    printf("%s\n", line);
+    while ((line = fgets(buf, BUFFER_SIZE, fp))) {
+        // DIVIDER();
+        // line = fgets(buf, BUFFER_SIZE, fp);
+        // PL(line);
+        Hog h = createHogFromLine(line);
+        if (h.CPU >= n) {
+            printHog(h);
+        }
+        // NEWLINE();
+
+        // printf("ICL: %d\n", notEndOfLine(line));
+        while (notEndOfLine(line)) {
+            line = fgets(buf, BUFFER_SIZE, fp);
+            // printf("WHILE LOOP: %s\n", line);
+            // printf("ICL: %d\n", notEndOfLine(line));
+        }
+        // PL("END OF LINE");
+        // NEWLINE();
+    }
 }
 
 void hogPN(double n) {
@@ -98,7 +162,7 @@ void hogPN(double n) {
         // DIVIDER();
         // line = fgets(buf, BUFFER_SIZE, fp);
         // PL(line);
-        struct Hog h = createHogFromLine(line);
+        Hog h = createHogFromLine(line);
         if (h.CPU >= n) {
             printHog(h);
         }
@@ -118,30 +182,30 @@ void hogPN(double n) {
 int main(int argc, char const* argv[]) {
     // printf("%s\n", argv[1]);
     // printf("%d\n", argc);
-    if (argc == 1) {  // print usage instructions
-        printHogUsageInstructions();
-        return -1;
-    } else if (argc == 2) {  // hog n
-        if (validateArgs(argc, argv) == -1) {
-            return -1;
-        };
-        printf("hogN()\n");
-        // int n = atoi(argv[1]);
-        // printf("n: %d\n", n);
-        hogN(atoi(argv[1]));
-        printf("done\n");
-    } else if (argc == 3) {  // hog -p n
-        if (validateArgs(argc, argv) == -1) {
-            return -1;
-        }
-        printf("hogPN()\n");
-        hogPN(atof(argv[2]));
-        printf("done\n");
-    } else { 
-        printHogUsageInstructions();
-        return -1;
-    }
+    // if (argc == 1) {  // print usage instructions
+    //     printHogUsageInstructions();
+    //     return -1;
+    // } else if (argc == 2) {  // hog n
+    //     if (validateArgs(argc, argv) == -1) {
+    //         return -1;
+    //     };
+    //     printf("hogN()\n");
+    //     // int n = atoi(argv[1]);
+    //     // printf("n: %d\n", n);
+    //     hogN(atoi(argv[1]));
+    //     printf("done\n");
+    // } else if (argc == 3) {  // hog -p n
+    //     if (validateArgs(argc, argv) == -1) {
+    //         return -1;
+    //     }
+    //     printf("hogPN()\n");
+    //     hogPN(atof(argv[2]));
+    //     printf("done\n");
+    // } else { 
+    //     printHogUsageInstructions();
+    //     return -1;
+    // }
 
-    // hogPN(1);
+    hogN(5);
     return 0;
 }
